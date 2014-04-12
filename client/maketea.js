@@ -137,8 +137,12 @@ Template.addperson.events = {
       name: tpl.find('.personName').value,
       img: tpl.find('.personImg').value
     }
+
     console.log(person)
-    Drinkers.insert(person)
-    tpl.find('form').reset()
+
+    Drinkers.insert(person, function (er) {
+      if (er) return console.error(er)
+      window.location = "/"
+    })
   }
 }
