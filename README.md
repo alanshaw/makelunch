@@ -1,62 +1,46 @@
-Make Lunch!
-===========
+Make Tea!
+=========
 
-Help figure out whose cooking next by recording stats on how many servings you've made vs how many you've received.
+Help figure out who's making tea next by recording stats on how many teas you've made vs how many you've received.
 
-If I cook for 8 people (including me), I recieve 1 portion and give 8, so am +7
+If I make tea for 8 people (including me), I recieve 1 portion and give 8, so am +7
 
-Meals are historical records. The stats on the Eaters are calculated on meal insert. It's an experiment in document storage style.
+Brews are historical records. The stats on the Drinkers are calculated on tea insert. It's an experiment in document storage style.
 
-To recommend who cooks next we look at how has the lowest value of `servings.given` - `servings.recieved`. 
-
-**TODO:**
-- In the event of a tie, who cooked longest ago. (could also factor in meals eaten vs cooked)
-- User auth
-- Edit data / correct mistakes
-- Whizzbang visulisations
+To recommend who makes tea next we look at how has the lowest value of `drinks.given` - `drinks.recieved`.
 
 Routes
 ------
 
 `/` = stats & recommendations
-`/addmeal` = create new meal data
+`/adddrink` = create new drink data
 `/addperson` = create new people
 
 
 Collections
 -----------
 
-**Meals**
+**Brews**
 ```
 {
   date: isoDate
-  chef: [userId]
-  eaters: [userId]
+  barista: [userId]
+  drinkers: [userId]
   guests: Integer
-  dish: String
 }
 ```
 
-**Eaters**
+**Drinkers**
 ```
 {
   name: String,
   img: url,
-  servings: {
+  drinks: {
     given: Integer,
     received: Integer
   }
-  mealsCooked: Interger,
-  lastCooked: isoDate,
-  lastEaten: isoDate
+  brewCount: Interger,
+  lastBrewed: isoDate,
+  lastDrank: isoDate
 }
 ```
-
-Initial data
-------------
-
-- 2014-02-10, Hammick cooked leaky pasta for Elliot, Evans, Robinson, Wooding + 1 guest
-- 2014-02-11, Wooding cooked baked potatoes for Elliot, Evans, Hammick, Shaw + 1 guest
-- 2014-02-12, Shaw Bacon pasta cooked for Elliot, Hammick, Robinson, Wooding + 1 guest
-- 2014-02-13, Evans cooked Onion, Bean & Pancetta Stew for Shaw, Wooding, Elliot, Hammick, Heatherington + 1 guest
-- 2014-02-14, Elliot and Heatherington cooked Fish pie for Shaw, Wooding, Elliot, Hammick, Evans, Robinson
