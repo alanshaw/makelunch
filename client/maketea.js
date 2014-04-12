@@ -122,8 +122,7 @@ Template.addbrew.dateNow = function () {
 }
 
 Template.addbrew.timeNow = function () {
-  var now = new Date()
-  return now.getHours() + ":" + now.getMinutes()
+  return moment().format("HH:mm")
 }
 
 Template.addbrew.rendered = function() {
