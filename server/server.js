@@ -1,19 +1,19 @@
-Meteor.publish('eaters', function () {
-  return Eaters.find({}, { sort: {name: 1} })
+Meteor.publish('drinkers', function () {
+  return Drinkers.find({}, { sort: {name: 1} })
 })
 
-Meteor.publish('meals', function () {
-  return Meals.find({})
+Meteor.publish('brews', function () {
+  return Brews.find({})
 })
 
 Meteor.startup(function () {
   
   //TODO: prevent editing from anonymous users
-  Eaters.allow({
+  Drinkers.allow({
     insert: function (userId, doc) {
-      if(!doc.servings){
-        doc.servings = { given:0, received: 0 }
-        doc.mealsCooked = 0
+      if(!doc.drinks){
+        doc.drinks = { given:0, received: 0 }
+        doc.brewCount = 0
       }
       return true
     },
@@ -24,7 +24,7 @@ Meteor.startup(function () {
     // userIds are used like foreign keys in Meal documents
   })
 
-  Meals.allow({
+  Brews.allow({
     insert:function (userId, doc) {
       updateStats(doc)
       return true
@@ -35,7 +35,7 @@ Meteor.startup(function () {
   })
 
   // reset stats after change
-  Meals.find({}).observeChanges({
+  Brews.find({}).observeChanges({
     changed: function (id, fields) {
       resetStats()
     }
@@ -43,33 +43,33 @@ Meteor.startup(function () {
    
 });
 
-function updateStats (meal) {
-  updateChefs(meal)
-  updateEaters(meal)
+function updateStats (brew) {
+  updateBrewMasters(brew)
+  updateDrinkers(brew)
 }
 
 // Update stats for the chef
-function updateChefs (meal) {
-  Eaters.update(
-    {'_id': { $in: meal.chef } },
+function updateBrewMasters (brew) {
+  Drinkers.update(
+    {_id: { $in: brew.master } },
     {
       $inc: { 
-        'mealsCooked': 1,
-        'servings.given': meal.eaters.length
+        brewCount: 1,
+        'drinks.given': brew.drinkers.length
       },
-      $set: { lastCooked: meal.date }
+      $set: { lastBrewed: brew.date }
     },
     { multi: true }
   )
 }
 
 // Update stats for eaters
-function updateEaters (meal) {
-  Eaters.update(
-    { '_id': { $in: meal.eaters } },
+function updateDrinkers (brew) {
+  Drinkers.update(
+    { _id: { $in: brew.drinkers } },
     {  
-      $set: { lastEaten: meal.date },
-      $inc: { 'servings.received': 1 }
+      $set: { lastDrank: brew.date },
+      $inc: { 'drinks.received': 1 }
     },
     { multi: true }
   )
@@ -77,23 +77,23 @@ function updateEaters (meal) {
 
 // Zero out all the stats and recalculate
 function resetStats () {
-  Eaters.update(
+  Drinkers.update(
     { }, // all
     {  
       $unset: { 
-        lastEaten: "",
-        lastCooked: ""
+        lastDrank: "",
+        lastBrewed: ""
       },
       $set: { 
-        mealsCooked: 0,
-        'servings.given': 0,
-        'servings.received': 0,
+        brewCount: 0,
+        'drinks.given': 0,
+        'drinks.received': 0,
       }
     },
     { multi: true }
   )
 
-  Meals.find().fetch().forEach(updateStats)
+  Brews.find().fetch().forEach(updateStats)
 }
 
 Meteor.methods({

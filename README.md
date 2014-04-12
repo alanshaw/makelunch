@@ -24,7 +24,7 @@ Collections
 ```
 {
   date: isoDate
-  barista: [userId]
+  master: [userId]
   drinkers: [userId]
   guests: Integer
 }

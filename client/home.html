@@ -6,32 +6,32 @@
 </template>
 
 <template name="today">
-  {{date}} - Chef of the day: <span id="chef">{{whoShouldCook.name}}</span>
+  Brew master: <span id="brew-master">{{whoShouldBrew.name}}</span>
 </template>
 
 <template name="deck">
   <div class="deck">
     {{#each people}}
-    <div class="card {{#if eating}}eating{{/if}}">
+    <div class="card {{#if drinking}}drinking{{/if}}">
       <h1>{{name}}</h1>
       {{> photoFrame this}}
       <ul class="stats">
         <li>
-          <label>Servings</label>
-          <span>{{servings.given}} : {{servings.received}}</span>
+          <label>Drinks</label>
+          <span>{{drinks.given}} : {{drinks.received}}</span>
         </li>
         <li>
-          <label>Last ate</label>
+          <label>Last drank</label>
           {{#if lastEaten}}
-          <span title="{{lastEaten}}">{{fromNow lastEaten}}</span>
+          <span title="{{lastDrank}}">{{fromNow lastDrank}}</span>
           {{else}}
           <span title="Never">Never</span>
           {{/if}}
         </li>
         <li>
-          <label>Last cooked</label>
-          {{#if lastCooked}}
-          <span title="{{lastCooked}}">{{fromNow lastCooked}}</span>
+          <label>Last brewed</label>
+          {{#if lastBrewed}}
+          <span title="{{lastBrewed}}">{{fromNow lastBrewed}}</span>
           {{else}}
           <span title="Never">Never</span>
           {{/if}}

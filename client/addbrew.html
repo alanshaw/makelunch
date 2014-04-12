@@ -1,0 +1,35 @@
+<template name="addbrew">
+  <form class="addBrew">
+    <div class="form-group">
+      <label>Who's drinking?</label>
+      <select class="brewDrinkers form-control" multiple="multiple">
+        {{#each people}}
+        <option value="{{_id}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Who's brewing?</label>
+      <select class="brewMaster form-control" multiple="multiple">
+        {{#each people}}
+        <option value="{{_id}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group guests">
+      <label>Any guests?</label>
+      <input type="number" min="0" step="1" value="0" class="brewGuests form-control"/>
+    </div>
+    <div class="form-group date">
+      <label>Date?</label>
+      <input type="date" class="brewDate form-control" value="{{dateNow}}"/>
+    </div>
+    <div class="form-group time">
+      <label>Time?</label>
+      <input type="time" class="brewTime form-control" value="{{timeNow}}"/>
+    </div>
+    <div class="form-group">
+      <button class="btn">Add</button>
+    </div>
+  </form>
+</template>

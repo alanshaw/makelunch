@@ -1,10 +1,10 @@
 Today = new Meteor.Collection('Today')
 
-Meals = new Meteor.Collection('Meals')
+Brews = new Meteor.Collection('Brews')
 
-Eaters = new Meteor.Collection('Eaters')
+Drinkers = new Meteor.Collection('Drinkers')
 
 // returns todays date as 2014-02-09
-todaysDate = function todaysDate() {
+todaysDate = function todaysDate () {
   return new Date().toISOString().split('T')[0]
 }
