@@ -60,12 +60,12 @@ Handlebars.registerHelper('profile', function (userId) {
 
 function scoreSort (a, b) {
   if (score(a) === score(b)) {
-    var aLastCooked = a.lastBrewed || "1970-01-01"
-    var bLastCooked = b.lastBrewed || "1970-01-01"
+    var aLastBrewed = a.lastBrewed || "1970-01-01"
+    var bLastBrewed = b.lastBrewed || "1970-01-01"
 
-    if (moment(aLastCooked).isSame(bLastCooked)) {
+    if (moment(aLastBrewed).isSame(bLastBrewed)) {
       return 0
-    } else if (moment(aLastCooked).isBefore(bLastCooked)) {
+    } else if (moment(aLastBrewed).isBefore(bLastBrewed)) {
       return -1
     } else {
       return 1
@@ -83,8 +83,8 @@ function whoShouldBrew() {
   return drinkers[0]
 }
 
-function score (person){
-  if(!person || !person.servings) return 0;
+function score (person) {
+  if (!person || !person.drinks) return 0;
   return person.drinks.given - person.drinks.received
 }
 
